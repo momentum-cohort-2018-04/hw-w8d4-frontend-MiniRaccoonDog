@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Card, CardHeader, CardHeaderTitle } from 'bloomer'
+import Database from './Database'
 
 import petfinderParse from './petfinderParse'
 import petfinderData from './petfinderData'
@@ -11,11 +12,14 @@ class Extract extends Component {
       user: window.localStorage.user ? window.localStorage.user : '',
       petData: {}
     }
+    this.db = new Database()
   }
 
   componentDidMount () {
     const output = petfinderParse(petfinderData)
+    // window.localStorage.data = output
     console.log(output)
+    this.db.writeDatabase(output)
   }
 
   render () {
