@@ -19,6 +19,33 @@ function petfinderParse (array) {
     const description = markdownDesc.replace((/â/g), `'`)
     // console.log(description)
     return ({
+      'dog': {
+        'contact': {
+          'state': array.contact.state['$t'],
+          'email': array.contact.email['$t'],
+          'city': array.contact.city['$t'],
+          'zip': array.contact.zip['$t']
+        },
+        'age': array.age['$t'],
+        'size': array.size['$t'],
+        'breed': array.breeds.breed['$t'],
+        'name': array.name['$t'],
+        'sex': array.sex['$t'],
+        'id': array.id['$t'],
+        'description': description,
+        'shelterId': array.shelterId['$t'],
+        'lastUpdate': array.lastUpdate['$t']
+      },
+      'photos': photoObjs,
+      'matched': false
+    })
+  })
+  return final
+}
+
+export default petfinderParse
+
+/* return ({
       [array.id['$t']]: {
         'contact': {
           'state': array.contact.state['$t'],
@@ -36,18 +63,4 @@ function petfinderParse (array) {
         'lastUpdate': array.lastUpdate['$t']
       },
       'photos': photoObjs
-    })
-  })
-
-  var fs = require('fs')
-
-  fs.writeFile('./object.json', JSON.stringify(final, null, 4), (err) => {
-    if (err) {
-      console.error(err)
-      return
-    };
-    console.log('File has been created')
-  })
-}
-
-export default petfinderParse
+    }) */

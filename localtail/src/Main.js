@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import { Card, CardHeader, CardHeaderTitle, CardImage, Image, Title, Subtitle, Media, MediaContent, Content, CardContent } from 'bloomer'
+// import { Card, CardHeader, CardHeaderTitle, CardImage, Image, Title, Subtitle, Media, MediaContent, Content, CardContent } from 'bloomer'
 import Database from './Database'
 import Pet from './Pet'
 
 class Main extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
-      user: window.localStorage.user ? window.localStorage.user : '',
-      petData: {}
+      useremail: window.localStorage.email ? window.localStorage.email : '',
+      petData: []
     }
     this.db = new Database()
   }
@@ -18,15 +18,16 @@ class Main extends Component {
   }
   makeEntry () {
     this.db.getPets().then((response) => {
-      console.log(response)
-      console.log('??', response[0])
-      this.setState({petData: response[0]})
+      console.log('make Entry', response)
+      this.setState({petData: response})
     })
   }
 
   render () {
-    // const pet = this.state.petData
-    return null
+    // return null
+    return this.state.petData.map((each, index) => {
+      return <Pet key={index} {...this.props} petData={each} />
+    })
   }
 }
 

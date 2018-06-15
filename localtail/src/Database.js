@@ -17,6 +17,13 @@ class Database {
       return data
     })
   }
+  writeDatabase (val) {
+    this.db.ref('/pets').set(val)
+      .then(response =>
+        console.log(response))
+      .catch(error =>
+        console.log(error))
+  }
 }
 
 export default Database

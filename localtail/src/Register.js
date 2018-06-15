@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 // import {Link} from 'react-router-dom'
 import {Title, Button, Box, Field, Control, Label, Input, Help} from 'bloomer'
+import firebase from 'firebase'
 
 class Register extends Component {
   constructor () {
     super()
     this.state = {
-      user: window.localStorage.user ? window.localStorage.user : '',
-      username: '',
+      email: '',
       password: '',
       passwordDup: '',
       invalidRegistration: false
@@ -21,14 +21,23 @@ class Register extends Component {
 
   submitRegister (event) {
     event.preventDefault()
-    if (this.state.password === this.state.passwordDup && this.state.username) {
-      const body = {
-        username: this.state.username,
-        password: this.state.password
-      }
-      console.log('login body', body)
+    if (this.state.password === this.state.passwordDup && this.state.email) {
+      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then(response => (
+          this.props.history.push('/')
+        ))
+        .catch(function (error) {
+        // Handle Errors here.
+          var errorCode = error.code
+          console.log(errorCode)
+          var errorMessage = error.message
+          // ...
+          console.log(errorMessage)
+          this.setState({invalidRegistration: true})
+        })
     } else {
       this.setState({invalidRegistration: true})
+      console.log('did not run email auth')
     }
   }
 
@@ -38,9 +47,9 @@ class Register extends Component {
         <Box>
           <Title>Register</Title>
           <Field>
-            <Label>Username</Label>
+            <Label>Email</Label>
             <Control>
-              <Input type='text' name='username' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
+              <Input type='text' name='email' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
             </Control>
           </Field>
 
@@ -59,10 +68,9 @@ class Register extends Component {
             {this.state.password !== '' && this.state.password === this.state.passwordDup && <Help isColor='success'>Your Passwords Match!</Help>}
             {this.state.invalidRegistration && <Help isColor='danger'>Please Verify All Fields and Resubmit</Help>}
           </Field>
-
           <Field isGrouped>
             <Control>
-              {this.state.password === this.state.passwordDup && this.state.password !== '' && this.state.username !== '' ? <Button isColor='success' type='button' onClick={(event) => this.submitRegister(event)}>Submit</Button>
+              {this.state.password === this.state.passwordDup && this.state.password !== '' && this.state.email !== '' ? <Button isColor='success' type='button' onClick={(event) => this.submitRegister(event)}>Submit</Button>
                 : <Button isStatic isColor='success' type='button' onClick={(event) => this.submitRegister(event)}>Submit</Button>
               }
             </Control>
@@ -72,7 +80,6 @@ class Register extends Component {
           </Field>
         </Box>
       </div>
-
     )
   }
 }

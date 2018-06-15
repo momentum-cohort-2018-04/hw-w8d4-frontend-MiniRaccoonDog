@@ -24,9 +24,16 @@ $primary: $pink;
 $primary-invert: $pink-invert;
 
 // 4. Import the rest of Bulma
-.inputwindow {
-  width: 90vw;
-  margin: 10vh 5vw;
+.card{
+  max-width:80%;
+  margin: 0 10%;
 }
-
+.image-container{
+  width:80vw;
+  // object-fit: scale-down;
+  // margin: 0 10%;
+}
+.image-photo{
+  object-fit: scale-down;
+}
 @import "../node_modules/bulma/bulma";

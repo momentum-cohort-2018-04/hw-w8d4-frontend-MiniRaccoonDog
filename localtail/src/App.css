@@ -1,6 +1,12 @@
-.inputwindow {
-  width: 90vw;
-  margin: 10vh 5vw; }
+.card {
+  max-width: 80%;
+  margin: 0 10%; }
+
+.image-container {
+  width: 80vw; }
+
+.image-photo {
+  object-fit: scale-down; }
 
 /*! bulma.io v0.7.1 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {

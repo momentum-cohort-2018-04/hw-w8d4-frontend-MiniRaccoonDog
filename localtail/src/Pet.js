@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Card, CardHeader, CardHeaderTitle, CardImage, Image, Title, Subtitle, Media, MediaContent, Content, CardContent } from 'bloomer'
-import Database from './Database'
 
 class Pet extends Component {
   constructor (props) {
@@ -9,20 +8,27 @@ class Pet extends Component {
       user: window.localStorage.user ? window.localStorage.user : '',
       petData: this.props.petData
     }
-    this.db = new Database()
+    console.log('petData', this.state.petData)
   }
 
   render () {
-    const pet = this.state.petData
+    const pet = this.state.petData.dog
+    const photos = this.state.petData.photos.map(photo => {
+      return (<img className='image-photo' isRatio='4:3' src={photo.url} />)
+      // alt use Image from Bloomer
+    })
+    function createMarkup () {
+      return {__html: pet.description}
+    }
     return (
-      <Card id={pet.id}>
+      <Card id={pet.id} className='card'>
         <CardHeader>
           <CardHeaderTitle>
             Component
           </CardHeaderTitle>
         </CardHeader>
-        <CardImage>
-          <Image isRatio='4:3' src='https://via.placeholder.com/1280x960' />
+        <CardImage className='image-container'>
+          {photos}
         </CardImage>
         <CardContent>
           <Media>
@@ -32,13 +38,13 @@ class Pet extends Component {
             </MediaContent>
           </Media>
           <Content>
-            {pet.description}
+            <div dangerouslySetInnerHTML={createMarkup()} />
             <br />
             <small>{pet.shelterId}</small>
           </Content>
           <Content>
-            <p>{console.log(pet.contact)}</p>
-            {/* <p>{pet.contactcity}, {pet.contact.state} {pet.contact.zip}</p> */}
+            {/* <p>{console.log(pet.contact)}</p> */}
+            <p>{pet.contact.city}, {pet.contact.state} {pet.contact.zip}</p>
           </Content>
         </CardContent>
       </Card>)
