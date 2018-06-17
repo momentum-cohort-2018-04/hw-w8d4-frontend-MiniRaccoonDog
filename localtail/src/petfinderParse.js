@@ -5,7 +5,7 @@ function petfinderParse (array) {
     const converter = new showdown.Converter()
     // {encoding: 'UTF8'}
     const pnPhotos = array.media.photos.photo.filter((entry) =>
-      entry['@size'] === 'pn')
+      entry['@size'] === 'x')
     const photoObjs = pnPhotos.map((entry) => {
       return ({
         'url': entry['$t'],

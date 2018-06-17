@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { Card, CardHeader, CardHeaderTitle, CardImage, Image, Title, Subtitle, Media, MediaContent, Content, CardContent } from 'bloomer'
 import Database from './Database'
 import Pet from './Pet'
 
@@ -7,26 +6,30 @@ class Main extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      useremail: window.localStorage.email ? window.localStorage.email : '',
-      petData: []
+      petData: [],
+      favorites: this.props.favorites
     }
     this.db = new Database()
   }
 
   componentDidMount () {
+    this.setState({favorites: this.props.favorites})
     this.makeEntry()
   }
   makeEntry () {
     this.db.getPets().then((response) => {
-      console.log('make Entry', response)
       this.setState({petData: response})
     })
   }
 
   render () {
-    // return null
+    console.log(this.state)
     return this.state.petData.map((each, index) => {
-      return <Pet key={index} {...this.props} petData={each} />
+      if (this.props.favorites && (this.props.favorites.indexOf(each.dog.id) !== -1)) {
+        return <Pet key={index} {...this.props} petData={each} favorite={1} addFav={this.props.addFav} removeFav={this.props.removeFav} />
+      } else {
+        return <Pet key={index} {...this.props} petData={each} favorite={0} />
+      }
     })
   }
 }
