@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 // import {Link} from 'react-router-dom'
 import {Title, Button, Box, Field, Control, Label, Input, Help} from 'bloomer'
 import firebase from 'firebase'
+import Database from './Database'
 
 class Register extends Component {
   constructor () {
@@ -10,9 +11,12 @@ class Register extends Component {
       email: '',
       password: '',
       passwordDup: '',
-      invalidRegistration: false
+      invalidRegistration: ''
     }
     this.changeHandler = this.changeHandler.bind(this)
+    this.addUser = this.addUser.bind(this)
+    this.setState = this.setState.bind(this)
+    this.db = new Database()
   }
 
   changeHandler (event) {
@@ -23,17 +27,12 @@ class Register extends Component {
     event.preventDefault()
     if (this.state.password === this.state.passwordDup && this.state.email) {
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then(response => (
+        .then(response => {
+          console.log('register response', response)
           this.props.history.push('/')
-        ))
+        })
         .catch(function (error) {
-        // Handle Errors here.
-          var errorCode = error.code
-          console.log(errorCode)
-          var errorMessage = error.message
-          // ...
-          console.log(errorMessage)
-          this.setState({invalidRegistration: true})
+          this.setState({invalidRegistration: error.message})
         })
     } else {
       this.setState({invalidRegistration: true})
@@ -66,7 +65,7 @@ class Register extends Component {
               <Input type='password' name='passwordDup' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
             </Control>
             {this.state.password !== '' && this.state.password === this.state.passwordDup && <Help isColor='success'>Your Passwords Match!</Help>}
-            {this.state.invalidRegistration && <Help isColor='danger'>Please Verify All Fields and Resubmit</Help>}
+            {this.state.invalidRegistration && <Help isColor='danger'>{this.state.invalidRegistration}</Help>}
           </Field>
           <Field isGrouped>
             <Control>

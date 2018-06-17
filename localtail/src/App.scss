@@ -24,16 +24,55 @@ $primary: $pink;
 $primary-invert: $pink-invert;
 
 // 4. Import the rest of Bulma
+*{
+  font-family: 'Encode Sans Expanded', sans-serif;
+}
+
 .card{
   max-width:80%;
-  margin: 0 10%;
+  margin: 5% 10%;
+  position: relative;
+  padding-bottom: 1rem;
 }
-.image-container{
-  width:80vw;
-  // object-fit: scale-down;
-  // margin: 0 10%;
-}
+// .image-container{
+// }
+
 .image-photo{
-  object-fit: scale-down;
+  width: 100%;
+  object-fit: cover;
+}
+.pet-name{
+  margin: 0 auto;
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+.favorite{
+  z-index: 1000;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 6rem;
+  width:6rem;
+}
+
+//ger
+.small{
+  font-weight: 300;
+}
+.medium{
+  font-weight:500;
+}
+.float-left{
+  float:left;
+}
+.float-right{
+  float:right;
+}
+.clear{
+  clear: both;
+}
+
+.top{
+  z-index: 10000;
 }
 @import "../node_modules/bulma/bulma";

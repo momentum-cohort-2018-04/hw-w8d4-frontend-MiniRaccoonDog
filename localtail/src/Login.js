@@ -4,7 +4,7 @@ import {Title, Button, Box, Field, Control, Label, Input, Help} from 'bloomer'
 // import { Button, Box } from 'bloomer'
 
 import firebase from 'firebase'
-// const provider = new firebase.auth.GoogleAuthProvider()
+import Database from './Database'
 
 class Login extends Component {
   constructor (props) {
@@ -15,6 +15,9 @@ class Login extends Component {
       password: '',
       loginFailed: false
     }
+    this.setState = this.setState.bind(this)
+
+    this.db = new Database()
   }
 
   changeHandler (event) {
@@ -23,16 +26,16 @@ class Login extends Component {
 
   submitLogin (event) {
     event.preventDefault()
-    // firebase.auth().signInWithRedirect(provider)
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(response =>
-        this.props.history.push('/'))
+      .then(response => {
+        this.props.history.push('/')
+      })
       .catch(function (error) {
       // Handle Errors here.
         var errorCode = error.code
-        console.log('sing in error code', errorCode)
+        console.log('Sign-in error code', errorCode)
         var errorMessage = error.message
-        console.log('sing in error code', errorMessage)
+        console.log('Sign-in error message', errorMessage)
         this.setState({loginFailed: true})
       // ...
       })
@@ -43,7 +46,6 @@ class Login extends Component {
     return (
       <div className='inputwindow' >
         <Box>
-          {/* <Button isColor='primary' onClick={this.submitLogin}>Login with Google</Button>} */}
           <Title>Login</Title>
           <Field>
             <Label>Email</Label>
