@@ -30,16 +30,23 @@ $primary-invert: $pink-invert;
 
 .card{
   max-width:80%;
-  margin: 5% 10%;
+  margin: 0 10%;
+  margin-bottom: 5%;
   position: relative;
   padding-bottom: 1rem;
 }
 // .image-container{
+//   width: 100%;
 // }
 
 .image-photo{
   width: 100%;
   object-fit: cover;
+}
+
+.pagination-button{
+  margin-top: 8vh;
+  margin-right: .25rem;
 }
 .pet-name{
   margin: 0 auto;
@@ -55,7 +62,15 @@ $primary-invert: $pink-invert;
   width:6rem;
 }
 
-//ger
+.entry{
+  margin: 1rem 2rem;
+}
+
+//general
+.center{
+  margin: 3rem 2rem;
+  text-align: center;
+}
 .small{
   font-weight: 300;
 }
@@ -71,8 +86,24 @@ $primary-invert: $pink-invert;
 .clear{
   clear: both;
 }
-
 .top{
   z-index: 10000;
+}
+.header-image{
+  background-image: url('./images/localtail.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 20vh;
+  // padding: 1rem, 2rem;
+  margin: 1rem .5rem;
+  position: relative;
+}
+
+.favorite-button{
+  position: absolute;
+  top: 13vh;
+  align-content: right;
+  left: 82vw;
+  width: 15vw;
 }
 @import "../node_modules/bulma/bulma";

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-// import {Link} from 'react-router-dom'
 import {Title, Button, Box, Field, Control, Label, Input, Help} from 'bloomer'
-// import { Button, Box } from 'bloomer'
 
 import firebase from 'firebase'
 import Database from './Database'
@@ -13,7 +11,8 @@ class Login extends Component {
       user: window.localStorage.user ? window.localStorage.user : '',
       email: '',
       password: '',
-      loginFailed: false
+      loginFailed: false,
+      error: ''
     }
     this.setState = this.setState.bind(this)
 
@@ -30,14 +29,11 @@ class Login extends Component {
       .then(response => {
         this.props.history.push('/')
       })
-      .catch(function (error) {
-      // Handle Errors here.
-        var errorCode = error.code
-        console.log('Sign-in error code', errorCode)
-        var errorMessage = error.message
-        console.log('Sign-in error message', errorMessage)
-        this.setState({loginFailed: true})
-      // ...
+      .catch((error) => {
+        this.setState({
+          loginFailed: true,
+          error: error.message
+        })
       })
   }
 
@@ -45,7 +41,7 @@ class Login extends Component {
     console.log(this.state)
     return (
       <div className='inputwindow' >
-        <Box>
+        <Box className='entry'>
           <Title>Login</Title>
           <Field>
             <Label>Email</Label>
@@ -53,22 +49,20 @@ class Login extends Component {
               <Input type='text' name='email' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
             </Control>
           </Field>
-
           <Field>
             <Label>Password</Label>
             <Control>
               <Input type='password' name='password' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
             </Control>
-            {this.state.loginFailed && <Help isColor='danger'>Invalid Credentials</Help>}
+            {this.state.loginFailed && <Help isColor='danger'>Invalid Credentials {this.state.error}</Help>}
           </Field>
-
           <Field isGrouped>
             <Control>
               {this.state.password && this.state.password !== '' && this.state.email !== '' ? <Button isColor='success' type='button' onClick={(event) => this.submitLogin(event)}>Submit</Button>
                 : <Button isStatic isColor='success' type='button' onClick={(event) => this.submitLogin(event)}>Submit</Button>}
             </Control>
             <Control>
-              <Button isOutlined isColor='danger' type='button' onClick={() => this.props.history.goBack}>Cancel</Button>
+              <Button isOutlined isColor='danger' type='button' onClick={() => this.props.history.push('/')}>Cancel</Button>
             </Control>
           </Field>
 

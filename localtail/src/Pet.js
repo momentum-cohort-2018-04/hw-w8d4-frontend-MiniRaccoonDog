@@ -52,7 +52,7 @@ class Pet extends Component {
           {Boolean(this.props.favorite) && <img className='favorite' src='https://iconmonstr.com/wp-content/g/gd/makefg.php?i=../assets/preview/2013/png/iconmonstr-bookmark-27.png&r=255&g=208&b=20' alt='favorited' />}
         </CardHeader>
         <CardImage className='image-container'>
-          <LightboxExample images={photoUrl} />
+          <LightboxExample images={photoUrl} name={pet.name} />
         </CardImage>
         <CardContent>
           <LevelLeft>
@@ -103,8 +103,8 @@ class LightboxExample extends Component {
 
     return (
       <div>
-        <a href='#' type='button' onClick={() => this.setState({ isOpen: true })}>
-          <img className='image-photo' src={this.state.images[0]} />
+        <a type='button' onClick={() => this.setState({ isOpen: true })}>
+          <img className='image-photo' src={this.state.images[0]} alt={this.props.name} />
         </a>
 
         {isOpen && (

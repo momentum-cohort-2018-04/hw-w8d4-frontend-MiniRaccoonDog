@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import {Link} from 'react-router-dom'
 import {Title, Button, Box, Field, Control, Label, Input, Help} from 'bloomer'
 import firebase from 'firebase'
 import Database from './Database'
@@ -11,10 +10,10 @@ class Register extends Component {
       email: '',
       password: '',
       passwordDup: '',
-      invalidRegistration: ''
+      invalidRegistration: false,
+      error: ''
     }
     this.changeHandler = this.changeHandler.bind(this)
-    this.addUser = this.addUser.bind(this)
     this.setState = this.setState.bind(this)
     this.db = new Database()
   }
@@ -31,8 +30,10 @@ class Register extends Component {
           console.log('register response', response)
           this.props.history.push('/')
         })
-        .catch(function (error) {
-          this.setState({invalidRegistration: error.message})
+        .catch((error) => {
+          this.setState({
+            invalidRegistration: true,
+            error: error.message})
         })
     } else {
       this.setState({invalidRegistration: true})
@@ -43,7 +44,7 @@ class Register extends Component {
   render () {
     return (
       <div className='inputwindow'>
-        <Box>
+        <Box className='entry'>
           <Title>Register</Title>
           <Field>
             <Label>Email</Label>
@@ -51,21 +52,19 @@ class Register extends Component {
               <Input type='text' name='email' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
             </Control>
           </Field>
-
           <Field>
             <Label>Password</Label>
             <Control>
               <Input type='password' name='password' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
             </Control>
           </Field>
-
           <Field>
             <Label>Confirm Password</Label>
             <Control>
               <Input type='password' name='passwordDup' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
             </Control>
             {this.state.password !== '' && this.state.password === this.state.passwordDup && <Help isColor='success'>Your Passwords Match!</Help>}
-            {this.state.invalidRegistration && <Help isColor='danger'>{this.state.invalidRegistration}</Help>}
+            {this.state.invalidRegistration && <Help isColor='danger'>Registration Invalid. {this.state.error}</Help>}
           </Field>
           <Field isGrouped>
             <Control>
