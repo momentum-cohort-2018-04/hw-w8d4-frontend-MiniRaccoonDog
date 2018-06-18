@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Card, CardHeader, CardImage, Title, Subtitle, LevelLeft, LevelRight, LevelItem, Content, CardContent } from 'bloomer'
 
 import Lightbox from 'react-image-lightbox'
+import Database from './Database'
 import 'react-image-lightbox/style.css'
 
 class Pet extends Component {
@@ -13,6 +14,7 @@ class Pet extends Component {
       favorite: this.props.favorite
     }
     this.favorited = this.favorited.bind(this)
+    this.db = new Database()
   }
 
   favorited (id) {
@@ -42,7 +44,11 @@ class Pet extends Component {
     if (pet.description.length > 390) {
       short = pet.description.slice(0, 390) + '... '
     } else { short = pet.description }
-
+    console.log(window.localStorage.zip, pet.contact.zip)
+    // let zipDist = ''
+    // if (window.localStorage.zip && pet.contact.zip) {
+    //   this.db.getZipDist(window.localStorage.zip, pet.contact.zip)
+    // }
     function createMarkup (description) {
       return {__html: description}
     }
@@ -78,6 +84,7 @@ class Pet extends Component {
             </LevelItem>
             <LevelItem className='float-right'>
               <p className='small'>{pet.contact.city}, {pet.contact.state} {pet.contact.zip}</p>
+              {/* {zipDist !== '' && <p>Distance from you: {zipDist}</p>} */}
             </LevelItem>
           </LevelRight>
         </CardContent>

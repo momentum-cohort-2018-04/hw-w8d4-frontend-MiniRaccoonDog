@@ -1,4 +1,5 @@
 import firebase from './firebase'
+import request from 'superagent'
 
 class Database {
   constructor () {
@@ -48,6 +49,15 @@ class Database {
     var updates = {}
     updates['/users/' + uid] = postData
     return this.db.ref().update(updates)
+  }
+
+  getZipDist (me, dog) {
+    request
+      .get(`https://www.zipcodeapi.com/rest/u74XfDvV0jHsVS9DF8xQOG2Tm2NPSlLSkUCUi85XQ2H9ra2sZVrrv5OrfESgUgWP/
+        distance.json/${me}/${dog}/mile`)
+      .then((response) => {
+        console.log(`zip response`, response)
+      })
   }
 }
 

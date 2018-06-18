@@ -68,8 +68,8 @@ class App extends Component {
       window.localStorage.email = this.state.email ? this.state.email : ''
       window.localStorage.uid = this.state.uid
       if (user) { this.getUserFavorites(this.state.uid) }
+      this.makeEntry()
     })
-    this.makeEntry()
   }
 
   logout () {

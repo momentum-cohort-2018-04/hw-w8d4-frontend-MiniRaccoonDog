@@ -11,6 +11,7 @@ class Login extends Component {
       user: window.localStorage.user ? window.localStorage.user : '',
       email: '',
       password: '',
+      zipcode: '',
       loginFailed: false,
       error: ''
     }
@@ -27,6 +28,7 @@ class Login extends Component {
     event.preventDefault()
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(response => {
+        window.localStorage.zip = this.state.zipcode
         this.props.history.push('/')
       })
       .catch((error) => {
@@ -47,6 +49,12 @@ class Login extends Component {
             <Label>Email</Label>
             <Control>
               <Input type='text' name='email' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
+            </Control>
+          </Field>
+          <Field>
+            <Label>Zipcode</Label>
+            <Control>
+              <Input type='number' name='zipcode' placeholder='Enter 5-Digit Zipcode' onChange={(event) => this.changeHandler(event)} />
             </Control>
           </Field>
           <Field>
