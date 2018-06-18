@@ -45,8 +45,11 @@ $primary-invert: $pink-invert;
 }
 
 .pagination-button{
-  margin-top: 8vh;
+  margin-top: 11vh;
   margin-right: .25rem;
+
+  z-index: 1000;
+  
 }
 .pet-name{
   margin: 0 auto;
@@ -94,9 +97,13 @@ $primary-invert: $pink-invert;
   background-size: contain;
   background-repeat: no-repeat;
   height: 20vh;
+  width: 50%;
   // padding: 1rem, 2rem;
-  margin: 1rem .5rem;
+  margin: 1rem 0;
+  margin-left: 1rem;
   position: relative;
+  float: left;
+  // border: rebeccapurple 2px solid;
 }
 
 .favorite-button{

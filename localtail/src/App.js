@@ -78,6 +78,7 @@ class App extends Component {
     firebase.auth().signOut().then(function () {
       console.log('Sign-out successful')
       window.localStorage.clear()
+      window.location.reload(true)
     }).catch(function (error) {
       console.log('an error on logout', error)
     })
@@ -91,20 +92,20 @@ class App extends Component {
 
     return (
       <div className='app'>
-        <div className='header-image'>
-          <Pagination className='float-right'>
-            {this.state.user ? <Button className='pagination-button' onClick={this.logout}>Logout</Button> : <Link to='/login'><Button className='pagination-button'>Login</Button></Link>}
-            <PageList >
-              <Link to='/'><Button className='pagination-button'>1</Button></Link>
-              <Link to='/2'><Button className='pagination-button'>2</Button></Link>
-              <Link to='/3'><Button className='pagination-button'>3</Button></Link>
-              <Link to='/4'><Button className='pagination-button'>4</Button></Link>
-              <Link to='/5'><Button className='pagination-button'>5</Button></Link>
-            </PageList>
-          </Pagination>
-          {this.state.user && <Link to='/favorites'><Button className='favorite-button' >Favorites</Button></Link>}
-        </div>
-
+        <Link to='/'><div className='header-image' /></Link>
+        {/* <a href='/' className='header-image' /> */}
+        <Pagination className='float-right'>
+          {this.state.user ? <Link to='/' onClick={this.logout}><Button className='pagination-button' >Logout</Button></Link> : <Link to='/login'><Button className='pagination-button'>Login</Button></Link>}
+          <PageList >
+            <Link to='/'><Button className='pagination-button'>1</Button></Link>
+            <Link to='/2'><Button className='pagination-button'>2</Button></Link>
+            <Link to='/3'><Button className='pagination-button'>3</Button></Link>
+            <Link to='/4'><Button className='pagination-button'>4</Button></Link>
+            <Link to='/5'><Button className='pagination-button'>5</Button></Link>
+          </PageList>
+        </Pagination>
+        <div className='clear' />
+        {this.state.user && <Link to='/favorites'><Button className='favorite-button' >Favorites</Button></Link>}
         <Route exact path='/' render={(props) => <Main {...props} petData={page1} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
         <Route exact path='/2' render={(props) => <Main {...props} petData={page2} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
         <Route exact path='/3' render={(props) => <Main {...props} petData={page3} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
