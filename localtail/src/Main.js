@@ -3,7 +3,7 @@ import Pet from './Pet'
 
 class Main extends Component {
   render () {
-    console.log(this.props.petData)
+    console.log('Appp props', this.props)
     return this.props.petData.map((each, index) => {
       if (this.props.favorites && (this.props.favorites.indexOf(each.dog.id) !== -1)) {
         return <Pet key={index} {...this.props} petData={each} favorite={1} addFav={this.props.addFav} removeFav={this.props.removeFav} />
