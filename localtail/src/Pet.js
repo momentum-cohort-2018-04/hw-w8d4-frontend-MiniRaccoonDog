@@ -45,10 +45,10 @@ class Pet extends Component {
       short = pet.description.slice(0, 390) + '... '
     } else { short = pet.description }
     console.log(window.localStorage.zip, pet.contact.zip)
-    // let zipDist = ''
-    // if (window.localStorage.zip && pet.contact.zip) {
-    //   this.db.getZipDist(window.localStorage.zip, pet.contact.zip)
-    // }
+    let zipDist = ''
+    if (window.localStorage.zip && pet.contact.zip) {
+      this.db.getZipDist(window.localStorage.zip, pet.contact.zip)
+    }
     function createMarkup (description) {
       return {__html: description}
     }
@@ -61,32 +61,35 @@ class Pet extends Component {
           <LightboxExample images={photoUrl} name={pet.name} />
         </CardImage>
         <CardContent>
-          <LevelLeft>
-            <Title isSize={4}>{pet.name}</Title>
-          </LevelLeft>
+          <Title isSize={4}>{pet.name}</Title>
+          <div>{pet.name}</div>
+          {/* <Subtitle isSize={6} className='pet-stats'>{pet.breed}</Subtitle> */}
+          {/* <Subtitle className='float-right' isSize={6}><small className='small'>Sex:</small> {sex} - <small className='small'>Size:</small> {size}</Subtitle> */}
+
           <LevelLeft>
             <LevelItem className='float-left'>
-              <Subtitle isSize={6}>{pet.breed}</Subtitle>
+              <div isSize={6} className='pet-stats'>{pet.breed}</div>
             </LevelItem>
           </LevelLeft>
           <LevelRight className='float-right'>
             <LevelItem>
-              <Subtitle isSize={6}><small className='small'>Sex:</small> {sex} - <small className='small'>Size:</small> {size}</Subtitle>
+              <small className='small'>Sex:</small> {sex} - <small className='small'>Size:</small> {size}
             </LevelItem>
           </LevelRight>
           <Content className='clear' onClick={() => this.expander()}>
-            {!this.state.isExpanded && <div dangerouslySetInnerHTML={createMarkup(short)} />}
-            {this.state.isExpanded && <div dangerouslySetInnerHTML={createMarkup(long)} />}
+            {!this.state.isExpanded && <div className='pet-text' dangerouslySetInnerHTML={createMarkup(short)} />}
+            {this.state.isExpanded && <div className='pet-text' dangerouslySetInnerHTML={createMarkup(long)} />}
+
+            <LevelRight>
+              <LevelItem className='float-left'>
+                <small className='small'>{pet.shelterId}</small>
+              </LevelItem>
+              <LevelItem className='float-right'>
+                <p className='small'>{pet.contact.city}, {pet.contact.state} {pet.contact.zip}</p>
+                {zipDist !== '' && <p>Distance from you: {zipDist}</p>}
+              </LevelItem>
+            </LevelRight>
           </Content>
-          <LevelRight>
-            <LevelItem className='float-left'>
-              <small className='small'>{pet.shelterId}</small>
-            </LevelItem>
-            <LevelItem className='float-right'>
-              <p className='small'>{pet.contact.city}, {pet.contact.state} {pet.contact.zip}</p>
-              {/* {zipDist !== '' && <p>Distance from you: {zipDist}</p>} */}
-            </LevelItem>
-          </LevelRight>
         </CardContent>
       </Card>
     )

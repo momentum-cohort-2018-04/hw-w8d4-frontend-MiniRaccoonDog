@@ -34,6 +34,8 @@ $primary-invert: $pink-invert;
   margin-bottom: 5%;
   position: relative;
   padding-bottom: 1rem;
+  font-size: 14px;
+
 }
 // .image-container{
 //   width: 100%;
@@ -53,6 +55,22 @@ $primary-invert: $pink-invert;
   font-weight: 800;
   font-size: 1.5rem;
 }
+.pet-text{
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  overflow:hidden;
+  border: blue solid 1px;
+  & p {
+    padding: 0;
+    margin:0rem;
+    line-height: 15px;
+    border-spacing: 0rem;
+    border: red solid 1px;
+  }
+}
+.pet-stats{
+  font-size: 1.rem;
+}
 .favorite{
   z-index: 1000;
   position: absolute;
@@ -66,6 +84,44 @@ $primary-invert: $pink-invert;
   margin: 1rem 2rem;
 }
 
+.title-loader{
+  text-align: center;
+  margin-top: 20vh;
+}
+.header-title{
+  background-image: url('./images/fullname.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 20vh;
+  // padding: 1rem, 2rem;
+  margin: 1rem .5rem;
+  position: relative;
+}
+.header-animation{
+  background-image: url('./images/giphy.gif');
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 20vh;
+  // padding: 1rem, 2rem;
+  margin: 1rem .5rem;
+  position: relative;
+}
+
+.custom-loader {
+  background-image: url('./images/run.gif');
+  background-size: contain;
+  height: 15vh;
+  bottom: 5rem;
+  position: fixed;  
+  
+  background-repeat: repeat;
+  width: 100%;
+  left: 0;
+    // background-repeat: no-repeat;
+    // width: 30vw; 
+    // left: 35vw;
+  // border: red 2px solid;
+}
 //general
 .center{
   margin: 3rem 2rem;

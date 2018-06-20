@@ -17,7 +17,8 @@ class Extract extends Component {
 
   componentDidMount () {
     const output = petfinderParse(petfinderData)
-    this.db.writeDatabase(output)
+    console.log(output)
+    // this.db.writeDatabase(output)
   }
 
   render () {

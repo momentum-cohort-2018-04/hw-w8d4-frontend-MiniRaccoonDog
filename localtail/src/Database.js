@@ -1,29 +1,42 @@
 import firebase from './firebase'
-import request from 'superagent'
 
 class Database {
   constructor () {
     this.db = firebase.database()
   }
 
-  getPets () {
-    return this.db.ref('/pets').once('value').then(snapshot => {
-      console.log('snapshot.val()', snapshot.val())
-      let categories = snapshot.val()
-      let data = Object.keys(categories).map(key => {
-        const category = categories[key]
-        return {id: key, ...category}
-      })
-      console.log('data', data)
-      return data
-    })
-  }
-  writeDatabase (val) {
-    this.db.ref('/pets').set(val)
-      .then(response =>
-        console.log('writeDatabase success', response))
-      .catch(error =>
-        console.log('writeDatabase error', error))
+  getPets (zip) {
+    console.log('Zip', zip)
+    const ref = this.db.ref('/pets').orderByChild('zip')
+    if (zip === '') {
+      return (
+        ref.once('value').then(snapshot => {
+          // console.log('snapshot.val()', snapshot.val())
+          let categories = snapshot.val()
+          let data = Object.keys(categories).map(key => {
+            const category = categories[key]
+            return {id: key, ...category}
+          })
+          console.log('data', data)
+          return data
+        })
+
+      )
+    } else {
+      console.log('else ran', zip, typeof (zip))
+      return (
+        this.db.ref('/pets').orderByChild('zip').equalTo(zip).once('value').then(snapshot => {
+          console.log('snapshot.val()', snapshot.val())
+          let categories = snapshot.val()
+          let data = Object.keys(categories).map(key => {
+            const category = categories[key]
+            return {id: key, ...category}
+          })
+          console.log('data', data)
+          return data
+        })
+      )
+    }
   }
 
   getUser (uid) {
@@ -42,22 +55,14 @@ class Database {
     )
   }
 
-  writeUser (uid, body) {
+  writeUser (uid, body, zip) {
     var postData = {
-      favorites: body
+      favorites: body,
+      zipcode: zip
     }
     var updates = {}
     updates['/users/' + uid] = postData
     return this.db.ref().update(updates)
-  }
-
-  getZipDist (me, dog) {
-    request
-      .get(`https://www.zipcodeapi.com/rest/u74XfDvV0jHsVS9DF8xQOG2Tm2NPSlLSkUCUi85XQ2H9ra2sZVrrv5OrfESgUgWP/
-        distance.json/${me}/${dog}/mile`)
-      .then((response) => {
-        console.log(`zip response`, response)
-      })
   }
 }
 

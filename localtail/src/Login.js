@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Title, Button, Box, Field, Control, Label, Input, Help} from 'bloomer'
-
+import Autocomplete from './Autocomplete'
 import firebase from 'firebase'
 import Database from './Database'
 
@@ -16,12 +16,17 @@ class Login extends Component {
       error: ''
     }
     this.setState = this.setState.bind(this)
+    this.getZip = this.getZip.bind(this)
 
     this.db = new Database()
   }
 
   changeHandler (event) {
     this.setState({[event.target.name]: event.target.value})
+  }
+
+  getZip (value) {
+    this.setState({zipcode: value})
   }
 
   submitLogin (event) {
@@ -52,10 +57,10 @@ class Login extends Component {
             </Control>
           </Field>
           <Field>
-            <Label>Zipcode</Label>
-            <Control>
+            <Autocomplete getZip={this.getZip} />
+            {/* <Control>
               <Input type='number' name='zipcode' placeholder='Enter 5-Digit Zipcode' onChange={(event) => this.changeHandler(event)} />
-            </Control>
+            </Control> */}
           </Field>
           <Field>
             <Label>Password</Label>

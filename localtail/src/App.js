@@ -10,7 +10,8 @@ import Register from './Register'
 import Extract from './Extract'
 import Favorites from './Favorites'
 
-import { Pagination, PageList, Button } from 'bloomer'
+import { Pagination, PageList, Button, Title } from 'bloomer'
+// import { Pagination, PageList, Button, Title, Modal, ModalBackground, ModalClose, ModalContent, Box } from 'bloomer'
 
 class App extends Component {
   constructor () {
@@ -19,7 +20,9 @@ class App extends Component {
       user: firebase.auth().currentUser,
       email: '',
       favorites: [],
-      petData: []
+      petData: [],
+      isLoading: true,
+      fullData: false
     }
     this.logout = this.logout.bind(this)
     this.updateUserFavorites = this.updateUserFavorites.bind(this)
@@ -30,14 +33,25 @@ class App extends Component {
   }
 
   makeEntry () {
-    this.db.getPets()
+    const zip = window.localStorage.zip ? window.localStorage.zip : ''
+    this.db.getPets(zip)
       .then((response) => {
-        this.setState({petData: response})
+        if (response.length >= 200) {
+          this.setState({
+            petData: response,
+            fullData: true
+          })
+        } else {
+          this.setState({petData: response})
+        }
       })
+      .then(
+        this.setState({isLoading: false})
+      )
   }
 
   updateUserFavorites (body) {
-    this.db.writeUser(window.localStorage.uid, body)
+    this.db.writeUser(window.localStorage.uid, body, window.localStorage.zip)
   }
 
   addtoFavorites (dogID) {
@@ -83,33 +97,49 @@ class App extends Component {
     })
   }
   render () {
-    const page1 = this.state.petData.slice(0, 10)
-    const page2 = this.state.petData.slice(10, 19)
-    const page3 = this.state.petData.slice(20, 29)
-    const page4 = this.state.petData.slice(30, 39)
-    const page5 = this.state.petData.slice(40, 49)
+    let page1, page2, page3, page4, page5
+    if (this.state.fullData) {
+      page1 = this.state.petData.slice(0, 50)
+      page2 = this.state.petData.slice(50, 99)
+      page3 = this.state.petData.slice(100, 149)
+      page4 = this.state.petData.slice(150, 199)
+      page5 = this.state.petData.slice(200)
+    }
 
     return (
       <div className='app'>
+        {/* <Modal isActive>
+          <ModalBackground />
+          <ModalContent>
+            <Box><div className='header-title' />
+              <div className='header-animation' /></Box>
+          </ModalContent>
+          <ModalClose />
+        </Modal> */}
         <div className='header-image'>
-          <Pagination className='float-right'>
+          <Pagination >
             {this.state.user ? <Button className='pagination-button' onClick={this.logout}>Logout</Button> : <Link to='/login'><Button className='pagination-button'>Login</Button></Link>}
-            <PageList >
+            {this.state.fullData && <PageList >
               <Link to='/'><Button className='pagination-button'>1</Button></Link>
               <Link to='/2'><Button className='pagination-button'>2</Button></Link>
               <Link to='/3'><Button className='pagination-button'>3</Button></Link>
               <Link to='/4'><Button className='pagination-button'>4</Button></Link>
               <Link to='/5'><Button className='pagination-button'>5</Button></Link>
-            </PageList>
+            </PageList> }
           </Pagination>
           {this.state.user && <Link to='/favorites'><Button className='favorite-button' >Favorites</Button></Link>}
         </div>
-
-        <Route exact path='/' render={(props) => <Main {...props} petData={page1} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
-        <Route exact path='/2' render={(props) => <Main {...props} petData={page2} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
-        <Route exact path='/3' render={(props) => <Main {...props} petData={page3} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
-        <Route exact path='/4' render={(props) => <Main {...props} petData={page4} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
-        <Route exact path='/5' render={(props) => <Main {...props} petData={page5} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
+        <Loader isLoading={this.state.isLoading}>
+          <Route exact path='/' render={(props) => <Main {...props} petData={this.state.petData} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
+          {this.state.fullData &&
+          <div>
+            <Route exact path='/' render={(props) => <Main {...props} petData={page1} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
+            <Route exact path='/2' render={(props) => <Main {...props} petData={page2} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
+            <Route exact path='/3' render={(props) => <Main {...props} petData={page3} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
+            <Route exact path='/4' render={(props) => <Main {...props} petData={page4} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
+            <Route exact path='/5' render={(props) => <Main {...props} petData={page5} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
+          </div>}
+        </Loader>
         <Route exact path='/favorites' render={(props) => <Favorites petData={this.state.petData} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} {...props} />} />
         <Route exact path='/login' render={(props) => <Login {...props} />} />
         <Route exact path='/register' render={(props) => <Register {...props} />} />
@@ -119,3 +149,28 @@ class App extends Component {
 }
 
 export default App
+
+class Loader extends Component {
+  // constructor (props) {
+  //   super(props)
+  //   this.state = {
+  //     isLoading: this.props.isLoading
+  //   }
+  // }
+
+  // componentDidMount () {
+  //   this.setState({isLoading: this.props.isLoading})
+  // }
+
+  render () {
+    if (this.props.isLoading) {
+      return (
+        <div>
+          <Title className='title-loader' >Content Loading...</Title>
+          <div className='custom-loader' />
+          {/* <div className='loader' /> */}
+        </div>
+      )
+    } else return (<div>{this.props.children}</div>)
+  }
+}

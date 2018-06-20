@@ -1,12 +1,4 @@
 const functions = require('firebase-functions')
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  response.send('Hello from Firebase!')
-})
-
 const admin = require('firebase-admin')
 const showdown = require('showdown')
 const request = require('superagent')
@@ -14,7 +6,6 @@ const request = require('superagent')
 admin.initializeApp()
 
 function petfinderParse (array) {
-  // const set1 = new Set()
   const final = array.map(array => {
     console.log(array)
     const converter = new showdown.Converter()
@@ -49,8 +40,8 @@ function petfinderParse (array) {
     if (array.contact.zip['$t']) {
       zip = array.contact.zip['$t']
     }
-    // set1.add(zip)
-    const markdownDesc = array.description['$t'] ? converter.makeHtml(array.description['$t']) : ''
+
+    const markdownDesc = converter.makeHtml(array.description['$t'])
     const middescription = markdownDesc.replace((/â/g), `'`)
     const description = middescription.replace((/Â/g), '')
 
@@ -75,16 +66,14 @@ function petfinderParse (array) {
       'zip': zip
     })
   })
-  // console.log(set1)
   return final
 }
 
-exports.addDogs = functions.https.onRequest((httprequest, httpresponse) => {
-  return request
+exports.addDogs = functions.https.onRequest((req, resp) => {
+  request
     .get(`http://api.petfinder.com/pet.find?key=${functions.config().petfinder.key}&animal=dog&location=durham,NC&output=full&count=250&format=json`)
     .then((response) => {
-      console.log(response.body)
-      return response.body.petfinder.pets.pet
+      return response.petfindr.pets.pet
     })
     .then((result) => {
       return petfinderParse(result)
@@ -92,12 +81,8 @@ exports.addDogs = functions.https.onRequest((httprequest, httpresponse) => {
     .then((parse) => {
       return admin.database().ref('/pets').update(parse)
     })
-    .then(response => {
-      console.log('writeDatabase success', response)
-      return httpresponse.send('Pet Database Updated Successfully')
-    })
-    .catch(error => {
-      console.log('writeDatabase error', error)
-      return httpresponse.status(500).send(error)
-    })
+    .then(response =>
+      console.log('writeDatabase success', response))
+    .catch(error =>
+      console.log('writeDatabase error', error))
 })

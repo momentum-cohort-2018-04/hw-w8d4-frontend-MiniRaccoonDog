@@ -3893,6 +3893,12 @@ dotenv@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
 
+downshift@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/downshift/-/downshift-2.0.3.tgz#87097942b7ddb26f4f97d1d893d680cc7f378617"
+  dependencies:
+    prop-types "^15.6.0"
+
 duplexer2@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer2/-/duplexer2-0.1.4.tgz#8b12dab878c0d69e3e7891051662a32fc6bddcc1"
