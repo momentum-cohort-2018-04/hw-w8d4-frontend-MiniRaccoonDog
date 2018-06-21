@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, CardHeader, CardImage, Title, Subtitle, LevelLeft, LevelRight, LevelItem, Content, CardContent } from 'bloomer'
+import { Card, CardHeader, CardImage, Content, CardContent } from 'bloomer'
 
 import Lightbox from 'react-image-lightbox'
 import Database from './Database'
@@ -41,14 +41,10 @@ class Pet extends Component {
     if (pet.size === 'M') { size = 'Medium' } else if (pet.size === 'L') { size = 'Large' } else if (pet.size === 'S') { size = 'Small' } else if (pet.size === 'XL') { size = 'Extra Large' } else { size = pet.size }
     let long = pet.description
     let short
-    if (pet.description.length > 390) {
-      short = pet.description.slice(0, 390) + '... '
+    if (pet.description.length > 275) {
+      short = pet.description.slice(0, 275) + '...' + `<div class='expander'>(Click to Expand)<div>`
     } else { short = pet.description }
-    console.log(window.localStorage.zip, pet.contact.zip)
-    let zipDist = ''
-    if (window.localStorage.zip && pet.contact.zip) {
-      this.db.getZipDist(window.localStorage.zip, pet.contact.zip)
-    }
+
     function createMarkup (description) {
       return {__html: description}
     }
@@ -59,36 +55,19 @@ class Pet extends Component {
         </CardHeader>
         <CardImage className='image-container'>
           <LightboxExample images={photoUrl} name={pet.name} />
+          {window.localStorage.email && <div className='bookmark' onClick={() => this.favorited(pet.id)} />}
         </CardImage>
         <CardContent>
-          <Title isSize={4}>{pet.name}</Title>
-          <div>{pet.name}</div>
-          {/* <Subtitle isSize={6} className='pet-stats'>{pet.breed}</Subtitle> */}
-          {/* <Subtitle className='float-right' isSize={6}><small className='small'>Sex:</small> {sex} - <small className='small'>Size:</small> {size}</Subtitle> */}
-
-          <LevelLeft>
-            <LevelItem className='float-left'>
-              <div isSize={6} className='pet-stats'>{pet.breed}</div>
-            </LevelItem>
-          </LevelLeft>
-          <LevelRight className='float-right'>
-            <LevelItem>
-              <small className='small'>Sex:</small> {sex} - <small className='small'>Size:</small> {size}
-            </LevelItem>
-          </LevelRight>
+          <div className='pet-name'>{pet.name}</div>
+          <div className='pet-breed'>{pet.breed}</div>
+          <div className='pet-stats'>
+            <small className='small'>Sex:</small> {sex} - <small className='small'>Size:</small> {size}
+          </div>
           <Content className='clear' onClick={() => this.expander()}>
             {!this.state.isExpanded && <div className='pet-text' dangerouslySetInnerHTML={createMarkup(short)} />}
             {this.state.isExpanded && <div className='pet-text' dangerouslySetInnerHTML={createMarkup(long)} />}
-
-            <LevelRight>
-              <LevelItem className='float-left'>
-                <small className='small'>{pet.shelterId}</small>
-              </LevelItem>
-              <LevelItem className='float-right'>
-                <p className='small'>{pet.contact.city}, {pet.contact.state} {pet.contact.zip}</p>
-                {zipDist !== '' && <p>Distance from you: {zipDist}</p>}
-              </LevelItem>
-            </LevelRight>
+            <small className='float-left small'>{pet.shelterId}</small>
+            <p className='float-right small'>{pet.contact.city}, {pet.contact.state} {pet.contact.zip}</p>
           </Content>
         </CardContent>
       </Card>

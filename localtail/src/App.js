@@ -10,9 +10,9 @@ import Register from './Register'
 import Extract from './Extract'
 import Favorites from './Favorites'
 
-import { Pagination, PageList, Button, Title } from 'bloomer'
+import { Title, Modal, ModalBackground, ModalClose, ModalContent, Box } from 'bloomer'
 // import { Pagination, PageList, Button, Title, Modal, ModalBackground, ModalClose, ModalContent, Box } from 'bloomer'
-
+// import { Navbar, NavbarBrand, NavbarMenu, NavbarEnd, NavbarStart } from 'bloomer'
 class App extends Component {
   constructor () {
     super()
@@ -22,7 +22,8 @@ class App extends Component {
       favorites: [],
       petData: [],
       isLoading: true,
-      fullData: false
+      fullData: false,
+      welcome: true
     }
     this.logout = this.logout.bind(this)
     this.updateUserFavorites = this.updateUserFavorites.bind(this)
@@ -97,48 +98,26 @@ class App extends Component {
     })
   }
   render () {
-    let page1, page2, page3, page4, page5
-    if (this.state.fullData) {
-      page1 = this.state.petData.slice(0, 50)
-      page2 = this.state.petData.slice(50, 99)
-      page3 = this.state.petData.slice(100, 149)
-      page4 = this.state.petData.slice(150, 199)
-      page5 = this.state.petData.slice(200)
-    }
-
     return (
       <div className='app'>
-        {/* <Modal isActive>
+        {/* <Modal isActive >
           <ModalBackground />
           <ModalContent>
-            <Box><div className='header-title' />
-              <div className='header-animation' /></Box>
+            <div className='welcome-window'><div className='welcome-title'>Local Tail</div>
+              <div className='welcome-animation' /></div>
           </ModalContent>
           <ModalClose />
         </Modal> */}
-        <div className='header-image'>
-          <Pagination >
-            {this.state.user ? <Button className='pagination-button' onClick={this.logout}>Logout</Button> : <Link to='/login'><Button className='pagination-button'>Login</Button></Link>}
-            {this.state.fullData && <PageList >
-              <Link to='/'><Button className='pagination-button'>1</Button></Link>
-              <Link to='/2'><Button className='pagination-button'>2</Button></Link>
-              <Link to='/3'><Button className='pagination-button'>3</Button></Link>
-              <Link to='/4'><Button className='pagination-button'>4</Button></Link>
-              <Link to='/5'><Button className='pagination-button'>5</Button></Link>
-            </PageList> }
-          </Pagination>
-          {this.state.user && <Link to='/favorites'><Button className='favorite-button' >Favorites</Button></Link>}
+
+        <div className='menu'>
+          {this.state.user ? <button className='menu-button float-left' onClick={this.logout}>Logout</button> : <Link to='/login'><button className='menu-button'>Login</button></Link>}
+          {this.state.user && <Link to='/favorites'><button className='menu-button float-right' >Favorites</button></Link>}
         </div>
         <Loader isLoading={this.state.isLoading}>
-          <Route exact path='/' render={(props) => <Main {...props} petData={this.state.petData} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
-          {this.state.fullData &&
-          <div>
-            <Route exact path='/' render={(props) => <Main {...props} petData={page1} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
-            <Route exact path='/2' render={(props) => <Main {...props} petData={page2} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
-            <Route exact path='/3' render={(props) => <Main {...props} petData={page3} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
-            <Route exact path='/4' render={(props) => <Main {...props} petData={page4} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
-            <Route exact path='/5' render={(props) => <Main {...props} petData={page5} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
-          </div>}
+          <div className='pet-container'>
+            <Route exact path='/' render={(props) =>
+              <Main {...props} petData={this.state.petData} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
+          </div>
         </Loader>
         <Route exact path='/favorites' render={(props) => <Favorites petData={this.state.petData} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} {...props} />} />
         <Route exact path='/login' render={(props) => <Login {...props} />} />

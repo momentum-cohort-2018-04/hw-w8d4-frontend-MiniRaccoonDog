@@ -1,75 +1,98 @@
 @charset "utf-8";
-
-// Customization
-
-// You can easily customize Bulma with your own variables.
-// Just uncomment the following block to see the result.
-
-
-// 1. Import the initial variables
 @import "../node_modules/bulma/sass/utilities/initial-variables";
 
-// 2. Set your own initial variables
-// Update the blue shade, used for links
-$blue: #06bcef;
-// Add pink and its invert
-$pink: #ff8080;
-$pink-invert: #fff;
-// Update the sans-serif font family
-$family-sans-serif: "Helvetica", "Arial", sans-serif;
-
-// 3. Set the derived variables
-// Use the new pink as the primary color
-$primary: $pink;
-$primary-invert: $pink-invert;
-
-// 4. Import the rest of Bulma
-*{
-  font-family: 'Encode Sans Expanded', sans-serif;
-}
-
+$family-sans-serif: 'Encode Sans Expanded', sans-serif;
+*{font-size: 14px;}
 .card{
   max-width:80%;
   margin: 0 10%;
   margin-bottom: 5%;
   position: relative;
   padding-bottom: 1rem;
-  font-size: 14px;
-
+  // font-size: 14px;
 }
-// .image-container{
-//   width: 100%;
-// }
 
 .image-photo{
   width: 100%;
   object-fit: cover;
 }
 
-.pagination-button{
-  margin-top: 8vh;
-  margin-right: .25rem;
-}
-.pet-name{
-  margin: 0 auto;
-  font-weight: 800;
-  font-size: 1.5rem;
-}
-.pet-text{
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  overflow:hidden;
-  border: blue solid 1px;
-  & p {
-    padding: 0;
-    margin:0rem;
-    line-height: 15px;
-    border-spacing: 0rem;
-    border: red solid 1px;
+.menu{
+  position: sticky;
+  width: 100%;
+  height: 1.8rem;
+  border: black 1px solid;
+  background-color: white;
+  top: 0;
+  z-index: 1000;
+  &-button{
+    height:100%;
+    width: 40%;
+    font-size: 18px;
+    border:none;
+    font-weight: 800;
+  }
+  &-button:hover{
+    background-color:rgb(156, 154, 154);
+    font-size: 28px;
   }
 }
-.pet-stats{
-  font-size: 1.rem;
+
+.pet{
+  &-name{
+    font-weight: 800;
+    font-size: 250%;
+    font-family:'Galada', cursive;
+    // border: blue solid 1px;
+  }
+  &-breed{
+    font-size: .85rem;
+    // border: purple solid 1px;
+    float:left;
+  }
+  &-stats{
+    font-size: .75rem;
+    // border: green solid 1px;
+    float:right;
+  }
+
+  &-text{
+    box-sizing: border-box;
+    // height: 10rem;
+    overflow-wrap: break-word;
+    overflow:hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
+    // border: blue solid 1px;
+    // & p {
+      // padding: 0;
+      // margin:0rem;
+      // line-height: 15px;
+      // border-spacing: 0rem;
+      // border: red solid 1px;
+    // }
+  }
+}
+.expander{
+  font-size: .7rem;
+  text-align: center;
+  font-style: italic;
+  font-weight: 200;
+  padding:0;
+  margin:0;
+}
+.bookmark{
+  position: absolute;
+  height:2.75rem;
+  width:2.5rem;
+  background-image: url('./images/addbookmark.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  right: 20px;
+  top: auto;
+}
+.red{
+  border: red 2px dotted;
 }
 .favorite{
   z-index: 1000;
@@ -87,25 +110,38 @@ $primary-invert: $pink-invert;
 .title-loader{
   text-align: center;
   margin-top: 20vh;
+  font-family:'Galada', cursive;
 }
-.header-title{
-  background-image: url('./images/fullname.png');
-  background-size: contain;
+.welcome-window{
+  width: 80%;
+  height: 50vh;
+  margin: 0 auto;
+  background-image: url('./images/marek-szturc-406031-unsplash.jpg');
+  background-size: cover;
+  background-position: 50% 50%;
   background-repeat: no-repeat;
-  height: 20vh;
-  // padding: 1rem, 2rem;
-  margin: 1rem .5rem;
   position: relative;
 }
-.header-animation{
-  background-image: url('./images/giphy.gif');
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 20vh;
+.welcome-title{
+  width:100%;
+  font-family:'Galada', cursive;
+  font-size:350%;
   // padding: 1rem, 2rem;
-  margin: 1rem .5rem;
-  position: relative;
+  // margin: 1rem .5rem;
+  position: absolute;
+  margin: 0 auto;
+  top: 65%;
+  left:10%;
 }
+// .welcome-animation{
+//   background-image: url('./images/giphy.gif');
+//   background-size: contain;
+//   background-repeat: no-repeat;
+//   height: 20vh;
+//   // padding: 1rem, 2rem;
+//   margin: 1rem .5rem;
+//   position: relative;
+// }
 
 .custom-loader {
   background-image: url('./images/run.gif');
@@ -113,10 +149,10 @@ $primary-invert: $pink-invert;
   height: 15vh;
   bottom: 5rem;
   position: fixed;  
-  
   background-repeat: repeat;
   width: 100%;
   left: 0;
+  // background-repeat: space;
     // background-repeat: no-repeat;
     // width: 30vw; 
     // left: 35vw;
@@ -145,21 +181,51 @@ $primary-invert: $pink-invert;
 .top{
   z-index: 10000;
 }
-.header-image{
-  background-image: url('./images/localtail.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 20vh;
-  // padding: 1rem, 2rem;
-  margin: 1rem .5rem;
-  position: relative;
+@media only screen and (min-width: 450px) {
+  .card{
+    width: 15rem;
+    margin: 0 auto;
+    padding: 0;
+  
+  }
+  .pet-container{
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 auto;
+  }
+  .pet{
+    &-name{
+      font-size: 30px;
+    }
+    &-breed{
+      font-size: 20px;
+    }
+    &-stats{
+      font-size: 15px;
+    }
+    &-text{
+      font-size:18px;
+    }
+  }
+
+  .image-photo{
+    height: 18rem;
+    object-position: 50% 50%;
+  }
+
+  .menu{
+    height: 2.75rem;
+    &-button{
+      font-size: 22px;
+    }
+    &-button:hover{
+      font-size: 26px;
+    }
+  }
 }
 
-.favorite-button{
-  position: absolute;
-  top: 13vh;
-  align-content: right;
-  left: 82vw;
-  width: 15vw;
-}
+
+
 @import "../node_modules/bulma/bulma";
