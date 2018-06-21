@@ -108,7 +108,6 @@ class App extends Component {
           </ModalContent>
           <ModalClose />
         </Modal> */}
-
         <div className='menu'>
           {this.state.user ? <button className='menu-button float-left' onClick={this.logout}>Logout</button> : <Link to='/login'><button className='menu-button'>Login</button></Link>}
           {this.state.user && <Link to='/favorites'><button className='menu-button float-right' >Favorites</button></Link>}
