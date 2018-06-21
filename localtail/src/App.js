@@ -10,9 +10,9 @@ import Register from './Register'
 import Extract from './Extract'
 import Favorites from './Favorites'
 
-import { Pagination, PageList, Button, Title } from 'bloomer'
+import { Title, Modal, ModalBackground, ModalClose, ModalContent, Box } from 'bloomer'
 // import { Pagination, PageList, Button, Title, Modal, ModalBackground, ModalClose, ModalContent, Box } from 'bloomer'
-
+// import { Navbar, NavbarBrand, NavbarMenu, NavbarEnd, NavbarStart } from 'bloomer'
 class App extends Component {
   constructor () {
     super()
@@ -22,7 +22,8 @@ class App extends Component {
       favorites: [],
       petData: [],
       isLoading: true,
-      fullData: false
+      fullData: false,
+      welcome: true
     }
     this.logout = this.logout.bind(this)
     this.updateUserFavorites = this.updateUserFavorites.bind(this)
@@ -99,22 +100,23 @@ class App extends Component {
   render () {
     return (
       <div className='app'>
-        {/* <Modal isActive>
+        {/* <Modal isActive >
           <ModalBackground />
           <ModalContent>
-            <Box><div className='header-title' />
-              <div className='header-animation' /></Box>
+            <div className='welcome-window'><div className='welcome-title'>Local Tail</div>
+              <div className='welcome-animation' /></div>
           </ModalContent>
           <ModalClose />
         </Modal> */}
-        <div className='header-image'>
-          <Pagination>
-            {this.state.user ? <Button className='pagination-button' onClick={this.logout}>Logout</Button> : <Link to='/login'><Button className='pagination-button'>Login</Button></Link>}            
-          </Pagination>
-          {this.state.user && <Link to='/favorites'><Button className='favorite-button' >Favorites</Button></Link>}
+        <div className='menu'>
+          {this.state.user ? <button className='menu-button float-left' onClick={this.logout}>Logout</button> : <Link to='/login'><button className='menu-button'>Login</button></Link>}
+          {this.state.user && <Link to='/favorites'><button className='menu-button float-right' >Favorites</button></Link>}
         </div>
         <Loader isLoading={this.state.isLoading}>
-          <Route exact path='/' render={(props) => <Main {...props} petData={this.state.petData} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
+          <div className='pet-container'>
+            <Route exact path='/' render={(props) =>
+              <Main {...props} petData={this.state.petData} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} />} />
+          </div>
         </Loader>
         <Route exact path='/favorites' render={(props) => <Favorites petData={this.state.petData} favorites={this.state.favorites} addFav={this.addtoFavorites} removeFav={this.removefromFavorites} {...props} />} />
         <Route exact path='/login' render={(props) => <Login {...props} />} />
