@@ -1,0 +1,116 @@
+@charset "utf-8";
+
+// Customization
+
+// You can easily customize Bulma with your own variables.
+// Just uncomment the following block to see the result.
+
+
+// 1. Import the initial variables
+@import "../node_modules/bulma/sass/utilities/initial-variables";
+
+// 2. Set your own initial variables
+// Update the blue shade, used for links
+$blue: #06bcef;
+// Add pink and its invert
+$pink: #ff8080;
+$pink-invert: #fff;
+// Update the sans-serif font family
+$family-sans-serif: "Helvetica", "Arial", sans-serif;
+
+// 3. Set the derived variables
+// Use the new pink as the primary color
+$primary: $pink;
+$primary-invert: $pink-invert;
+
+// 4. Import the rest of Bulma
+*{
+  font-family: 'Encode Sans Expanded', sans-serif;
+}
+
+.card{
+  max-width:80%;
+  margin: 0 10%;
+  margin-bottom: 5%;
+  position: relative;
+  padding-bottom: 1rem;
+}
+// .image-container{
+//   width: 100%;
+// }
+
+.image-photo{
+  width: 100%;
+  object-fit: cover;
+}
+
+.pagination-button{
+  margin-top: 11vh;
+  margin-right: .25rem;
+
+  z-index: 1000;
+  
+}
+.pet-name{
+  margin: 0 auto;
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+.favorite{
+  z-index: 1000;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 6rem;
+  width:6rem;
+}
+
+.entry{
+  margin: 1rem 2rem;
+}
+
+//general
+.center{
+  margin: 3rem 2rem;
+  text-align: center;
+}
+.small{
+  font-weight: 300;
+}
+.medium{
+  font-weight:500;
+}
+.float-left{
+  float:left;
+}
+.float-right{
+  float:right;
+}
+.clear{
+  clear: both;
+}
+.top{
+  z-index: 10000;
+}
+.header-image{
+  background-image: url('./images/localtail.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 20vh;
+  width: 50%;
+  // padding: 1rem, 2rem;
+  margin: 1rem 0;
+  margin-left: 1rem;
+  position: relative;
+  float: left;
+  // border: rebeccapurple 2px solid;
+}
+
+.favorite-button{
+  position: absolute;
+  top: 13vh;
+  align-content: right;
+  left: 82vw;
+  width: 15vw;
+}
+@import "../node_modules/bulma/bulma";
