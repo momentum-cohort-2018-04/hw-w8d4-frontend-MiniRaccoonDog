@@ -1,0 +1,90 @@
+import React, { Component } from 'react'
+import {Title, Button, Box, Field, Control, Label, Input, Help} from 'bloomer'
+import firebase from 'firebase'
+import Database from './Database'
+import PropTypes from 'prop-types'
+
+class Register extends Component {
+  constructor () {
+    super()
+    this.state = {
+      email: '',
+      password: '',
+      passwordDup: '',
+      invalidRegistration: false,
+      error: ''
+    }
+    this.changeHandler = this.changeHandler.bind(this)
+    this.setState = this.setState.bind(this)
+    this.db = new Database()
+  }
+
+  changeHandler (event) {
+    this.setState({[event.target.name]: event.target.value})
+  }
+
+  submitRegister (event) {
+    event.preventDefault()
+    if (this.state.password === this.state.passwordDup && this.state.email) {
+      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then(response => {
+          console.log('register response', response)
+          this.props.history.push('/')
+        })
+        .catch((error) => {
+          this.setState({
+            invalidRegistration: true,
+            error: error.message})
+        })
+    } else {
+      this.setState({invalidRegistration: true})
+      console.log('did not run email auth')
+    }
+  }
+
+  render () {
+    return (
+      <div className='inputwindow'>
+        <Box className='entry'>
+          <Title>Register</Title>
+          <Field>
+            <Label>Email</Label>
+            <Control>
+              <Input type='text' name='email' placeholder='Enter Email' onChange={(event) => this.changeHandler(event)} />
+            </Control>
+          </Field>
+          <Field>
+            <Label>Password</Label>
+            <Control>
+              <Input type='password' name='password' placeholder='Enter Password' onChange={(event) => this.changeHandler(event)} />
+            </Control>
+          </Field>
+          <Field>
+            <Label>Confirm Password</Label>
+            <Control>
+              <Input type='password' name='passwordDup' placeholder='Enter Password' onChange={(event) => this.changeHandler(event)} />
+            </Control>
+            {this.state.password !== '' && this.state.password === this.state.passwordDup && <Help isColor='success'>Your Passwords Match!</Help>}
+            {this.state.invalidRegistration && <Help isColor='danger'>Registration Invalid. {this.state.error}</Help>}
+          </Field>
+          <Field isGrouped>
+            <Control>
+              {this.state.password === this.state.passwordDup && this.state.password !== '' && this.state.email !== '' ? <Button isColor='success' type='button' onClick={(event) => this.submitRegister(event)}>Submit</Button>
+                : <Button isStatic isColor='success' type='button' onClick={(event) => this.submitRegister(event)}>Submit</Button>
+              }
+            </Control>
+            <Control>
+              <Button isOutlined isColor='danger' type='button' onClick={() => this.props.history.push('/')}>Cancel</Button>
+            </Control>
+          </Field>
+        </Box>
+      </div>
+    )
+  }
+}
+
+export default Register
+
+Register.propTypes = {
+  history: PropTypes.object.isRequired
+}

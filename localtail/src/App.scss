@@ -1,0 +1,211 @@
+@charset "utf-8";
+@import "../node_modules/bulma/sass/utilities/initial-variables";
+
+$family-sans-serif: 'Encode Sans Expanded', sans-serif;
+.card{
+  width:80%;
+  margin: 0 10%;
+  margin-bottom: 5%;
+  position: relative;
+  padding-bottom: 1rem;
+  font-size: 14px;
+}
+
+.image-photo{
+  width: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.menu{
+  position: sticky;
+  width: 100%;
+  height: 2rem;
+  border-bottom: grey 1px solid;
+  background-color: white;
+  top: 0;
+  z-index: 1000;
+  &-button{
+    height:100%;
+    width: 30%;
+    font-size: 18px;
+    border:none;
+    font-weight: 800;
+    margin: 0 1.5%;
+  }
+  &-button:hover{
+    background-color:rgb(156, 154, 154);
+    font-size: 20px;
+  }
+}
+
+.pet{
+  &-name{
+    font-weight: 800;
+    font-size: 250%;
+    font-family:'Galada', cursive;
+  }
+  &-breed{
+    font-size: .85rem;
+    float:left;
+  }
+  &-stats{
+    font-size: .75rem;
+    float:right;
+    margin-bottom: .4rem;
+  }
+  &-text{
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    overflow:hidden;
+  }
+}
+.expander{
+  font-size: .7rem;
+  text-align: center;
+  font-style: italic;
+  font-weight: 200;
+  padding:0;
+  margin:0;
+}
+.bookmark{
+  position: absolute;
+  height:2.75rem;
+  width:2.5rem;
+  background-image: url('./images/addbookmark.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  right: 20px;
+  top: auto;
+}
+
+.favorite{
+  z-index: 1000;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 6rem;
+  width:6rem;
+}
+
+.entry{
+  margin: 1rem 2rem;
+}
+
+.welcome-window{
+  width: 80%;
+  height: 50vh;
+  margin: 0 auto;
+  // background-image: url('./images/marek-szturc-406031-unsplash.jpg');
+  background-image: url('https://tinyurl.com/y9zw38xd');
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.welcome-title{
+  width:100%;
+  font-family:'Galada', cursive;
+  font-size:350%;
+  position: absolute;
+  margin: 0 auto;
+  top: 65%;
+  left:12vw;
+}
+
+.title-loader{
+  text-align: center;
+  margin-top: 30vh;
+  font-family:'Galada', cursive;
+}
+.custom-loader {
+  background-image: url('./images/run.gif');
+  background-size: contain;
+  height: 15vh;
+  bottom: 5rem;
+  position: fixed;  
+  background-repeat: repeat;
+  width: 100%;
+  left: 0;
+}
+//-------------------VAGUE and GENERAL CSS-------------------//
+.center{
+  margin: 3rem 2rem;
+  text-align: center;
+}
+.small{
+  font-weight: 300;
+}
+.medium{
+  font-weight:500;
+}
+.float-left{
+  float:left;
+}
+.float-right{
+  float:right;
+}
+.clear{
+  clear: both;
+}
+.top{
+  z-index: 10000;
+}
+.neartop{
+  z-index: 9999;
+}
+@media only screen and (min-width: 600px) {
+  .card{
+    width: 45%;
+    margin: 0 auto;
+    padding: 0;
+  }
+  .pet-container{
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 auto;
+  }
+  .pet{
+    &-name{
+      font-size: 30px;
+    }
+    &-breed{
+      font-size: 20px;
+    }
+    &-stats{
+      font-size: 15px;
+    }
+    &-text{
+      font-size:18px;
+    }
+  }
+
+  .image-photo{
+    height: 22rem;
+  }
+
+  .menu{
+    height: 2.75rem;
+    &-button{
+      font-size: 22px;
+    }
+    &-button:hover{
+      font-size: 26px;
+    }
+  }
+}
+
+@media only screen and (min-width: 860px) {
+  .card{
+    width: 16.5rem;  
+    max-width: 40%;
+  }
+  .image-photo{
+    height: 19rem;
+  }
+}
+
+
+@import "../node_modules/bulma/bulma";
