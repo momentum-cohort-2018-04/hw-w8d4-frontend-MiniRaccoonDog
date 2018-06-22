@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Downshift from 'downshift'
 import { Label, Input } from 'bloomer'
+import PropTypes from 'prop-types'
 
 class Autocomplete extends Component {
   constructor (props) {
@@ -11,7 +12,7 @@ class Autocomplete extends Component {
   }
 
   render () {
-    const items = [{value: '27701'}, {value: '27709'}, {value: '27715'}, {value: '27704'}, {value: '27705'}, {value: '27703'}, {value: '27712'}, {value: '27514'}, {value: '27517'}, {value: '27617'}, {value: '27515'}, {value: '27613'}, {value: '27572'}, {value: '27522'}, {value: '27513'}, {value: '27614'}, {value: '27612'}, {value: '27518'}, {value: '27511'}, {value: '27512'}, {value: '27615'}, {value: '27609'}, {value: '27502'}]
+    const items = [{value: ' '}, {value: '27701'}, {value: '27709'}, {value: '27715'}, {value: '27704'}, {value: '27705'}, {value: '27703'}, {value: '27712'}, {value: '27514'}, {value: '27517'}, {value: '27617'}, {value: '27515'}, {value: '27613'}, {value: '27572'}, {value: '27522'}, {value: '27513'}, {value: '27614'}, {value: '27612'}, {value: '27518'}, {value: '27511'}, {value: '27512'}, {value: '27615'}, {value: '27609'}, {value: '27502'}]
     return (
       <Downshift
         onChange={selection => this.props.getZip(selection.value)}
@@ -28,7 +29,7 @@ class Autocomplete extends Component {
         }) => (
           <div>
             <Label {...getLabelProps('Zipcode')}>Zipcode</Label>
-            <Input name='zipcode' {...getInputProps()} placeholder='Enter or choose nearest Zipcode' />
+            <Input name='zipcode' {...getInputProps()} placeholder='Enter Zipcode' />
             {isOpen ? (
               <div>
                 {items
@@ -58,3 +59,7 @@ class Autocomplete extends Component {
 }
 
 export default Autocomplete
+
+Autocomplete.propTypes = {
+  getZip: PropTypes.func.isRequired
+}

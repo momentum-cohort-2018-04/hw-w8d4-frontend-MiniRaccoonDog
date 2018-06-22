@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Pet from './Pet'
 
 class Main extends Component {
@@ -7,7 +8,6 @@ class Main extends Component {
     this.state = {
       lastDogIndex: 20
     }
-
     this.handleScroll = this.handleScroll.bind(this)
   }
 
@@ -16,9 +16,8 @@ class Main extends Component {
     const windowHeight = window.innerHeight
     const bodyHeight = document.body.clientHeight - windowHeight
     const scrollPercentage = scrollTop / bodyHeight
-  
     if (scrollPercentage > 0.9) {
-      console.log('handleScroll!')
+      console.log('HandleScroll!')
       this.setState(prevState => ({
         lastDogIndex: Math.min(prevState.lastDogIndex + 20, this.props.petData.length)
       }))
@@ -34,7 +33,6 @@ class Main extends Component {
   }
 
   render () {
-    console.log('App props', this.props)
     return this.props.petData.slice(0, this.state.lastDogIndex).map((each, index) => {
       if (this.props.favorites && (this.props.favorites.indexOf(each.dog.id) !== -1)) {
         return <Pet key={index} {...this.props} petData={each} favorite={1} addFav={this.props.addFav} removeFav={this.props.removeFav} />
@@ -46,3 +44,10 @@ class Main extends Component {
 }
 
 export default Main
+
+Main.propTypes = {
+  petData: PropTypes.array.isRequired,
+  favorites: PropTypes.array.isRequired,
+  addFav: PropTypes.func.isRequired,
+  removeFav: PropTypes.func.isRequired
+}

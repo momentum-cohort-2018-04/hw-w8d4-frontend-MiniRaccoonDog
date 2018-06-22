@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Title, Button, Box, Field, Control, Label, Input, Help} from 'bloomer'
+import PropTypes from 'prop-types'
 import Autocomplete from './Autocomplete'
 import firebase from 'firebase'
 import Database from './Database'
@@ -45,7 +46,6 @@ class Login extends Component {
   }
 
   render () {
-    console.log(this.state)
     return (
       <div className='inputwindow' >
         <Box className='entry'>
@@ -53,19 +53,17 @@ class Login extends Component {
           <Field>
             <Label>Email</Label>
             <Control>
-              <Input type='text' name='email' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
+              <Input type='text' name='email' placeholder='Enter Email' onChange={(event) => this.changeHandler(event)} />
             </Control>
           </Field>
           <Field>
             <Autocomplete getZip={this.getZip} />
-            {/* <Control>
-              <Input type='number' name='zipcode' placeholder='Enter 5-Digit Zipcode' onChange={(event) => this.changeHandler(event)} />
-            </Control> */}
+            <Help isColor='success'>Choose the nearest zipcode or leave blank, for all results</Help>
           </Field>
           <Field>
             <Label>Password</Label>
             <Control>
-              <Input type='password' name='password' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
+              <Input type='password' name='password' placeholder='Enter Password' onChange={(event) => this.changeHandler(event)} />
             </Control>
             {this.state.loginFailed && <Help isColor='danger'>Invalid Credentials {this.state.error}</Help>}
           </Field>
@@ -90,3 +88,7 @@ class Login extends Component {
 }
 
 export default Login
+
+Login.propTypes = {
+  history: PropTypes.object.isRequired
+}

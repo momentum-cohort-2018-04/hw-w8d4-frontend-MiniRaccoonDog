@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Pet from './Pet'
 import { Box } from 'bloomer'
 
@@ -20,3 +21,11 @@ class Favorites extends Component {
 }
 
 export default Favorites
+
+Favorites.propTypes = {
+  history: PropTypes.object.isRequired,
+  favorites: PropTypes.array.isRequired,
+  addFav: PropTypes.func.isRequired,
+  removeFav: PropTypes.func.isRequired,
+  petData: PropTypes.array.isRequired
+}

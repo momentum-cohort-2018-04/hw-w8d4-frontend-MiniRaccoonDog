@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Card, CardHeader, CardImage, Content, CardContent } from 'bloomer'
 
+import PropTypes from 'prop-types'
 import Lightbox from 'react-image-lightbox'
 import Database from './Database'
 import 'react-image-lightbox/style.css'
@@ -55,7 +56,7 @@ class Pet extends Component {
         </CardHeader>
         <CardImage className='image-container'>
           <LightboxExample images={photoUrl} name={pet.name} />
-          {window.localStorage.email && <div className='bookmark' onClick={() => this.favorited(pet.id)} />}
+          {window.localStorage.uid && <div className='bookmark' onClick={() => this.favorited(pet.id)} />}
         </CardImage>
         <CardContent>
           <div className='pet-name'>{pet.name}</div>
@@ -115,4 +116,15 @@ class LightboxExample extends Component {
       </div>
     )
   }
+}
+
+Pet.propTypes = {
+  petData: PropTypes.object.isRequired,
+  favorites: PropTypes.array,
+  addFav: PropTypes.func.isRequired,
+  removeFav: PropTypes.func.isRequired
+}
+
+Lightbox.propTypes = {
+  images: PropTypes.array.isRequired
 }

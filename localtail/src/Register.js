@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Title, Button, Box, Field, Control, Label, Input, Help} from 'bloomer'
 import firebase from 'firebase'
 import Database from './Database'
+import PropTypes from 'prop-types'
 
 class Register extends Component {
   constructor () {
@@ -49,19 +50,19 @@ class Register extends Component {
           <Field>
             <Label>Email</Label>
             <Control>
-              <Input type='text' name='email' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
+              <Input type='text' name='email' placeholder='Enter Email' onChange={(event) => this.changeHandler(event)} />
             </Control>
           </Field>
           <Field>
             <Label>Password</Label>
             <Control>
-              <Input type='password' name='password' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
+              <Input type='password' name='password' placeholder='Enter Password' onChange={(event) => this.changeHandler(event)} />
             </Control>
           </Field>
           <Field>
             <Label>Confirm Password</Label>
             <Control>
-              <Input type='password' name='passwordDup' placeholder='Text Input' onChange={(event) => this.changeHandler(event)} />
+              <Input type='password' name='passwordDup' placeholder='Enter Password' onChange={(event) => this.changeHandler(event)} />
             </Control>
             {this.state.password !== '' && this.state.password === this.state.passwordDup && <Help isColor='success'>Your Passwords Match!</Help>}
             {this.state.invalidRegistration && <Help isColor='danger'>Registration Invalid. {this.state.error}</Help>}
@@ -83,3 +84,7 @@ class Register extends Component {
 }
 
 export default Register
+
+Register.propTypes = {
+  history: PropTypes.object.isRequired
+}
