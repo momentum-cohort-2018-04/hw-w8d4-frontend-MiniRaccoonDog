@@ -82,7 +82,7 @@
   width: 80%;
   height: 50vh;
   margin: 0 auto;
-  background-image: url("https://tinyurl.com/y9zw38xd");
+  background-image: url("./images/marek-szturc-406031-unsplash.jpg");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -96,6 +96,16 @@
   margin: 0 auto;
   top: 65%;
   left: 12vw; }
+
+.welcome-footer {
+  color: black;
+  width: 100%;
+  font-family: 'Galada', cursive;
+  font-size: 120%;
+  position: absolute;
+  margin: 0 auto;
+  top: 90%;
+  left: 3vw; }
 
 .title-loader {
   text-align: center;

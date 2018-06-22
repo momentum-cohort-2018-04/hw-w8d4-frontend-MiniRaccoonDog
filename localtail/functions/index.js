@@ -51,7 +51,7 @@ function petfinderParse (array) {
     }
     // set1.add(zip)
 
-    const betterdesc = array.description['$t'] ? array.description['$t'].replace((/(You MUST).*(AVAILABLE:)/g), '') : ''
+    const betterdesc = array.description['$t'] ? array.description['$t'].replace((/(You MUST).*(AVAILABLE:)/g), ' ') : ''
     const markdownDesc = converter.makeHtml(betterdesc)
 
     // const markdownDesc = array.description['$t'] ? converter.makeHtml(array.description['$t']) : ''

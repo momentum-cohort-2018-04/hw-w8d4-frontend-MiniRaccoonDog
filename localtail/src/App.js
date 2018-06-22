@@ -80,7 +80,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    window.setTimeout(() => { this.setState({welcome: false}) }, 3000)
+    window.setTimeout(() => { this.setState({welcome: false}) }, 4000)
 
     firebase.auth().onAuthStateChanged(user => {
       this.setState({
@@ -91,7 +91,7 @@ class App extends Component {
       window.localStorage.uid = this.state.uid
       if (user) { this.getUserFavorites(this.state.uid) }
     })
-    window.setTimeout(() => { this.makeEntry() }, 2500)
+    window.setTimeout(() => { this.makeEntry() }, 5000)
   }
 
   logout () {
@@ -112,7 +112,7 @@ class App extends Component {
         {this.state.first && this.state.welcome && <Modal isActive>
           <ModalBackground className='lowertop' />
           <ModalContent className='top'>
-            <div className='welcome-window'><div className='welcome-title'>Local Tail</div>
+            <div className='welcome-window'><div className='welcome-title'>Local Tail</div><div className='welcome-footer'>the best place to find your faithful companion</div>
               <div className='welcome-animation' /></div>
           </ModalContent>
         </Modal>}
